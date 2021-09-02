@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Create a tag
+name: Deploy a tag
 
 # Controls when the workflow will run
 on:
@@ -14,43 +14,37 @@ on:
   workflow_dispatch:
      inputs:
       tags:
-        description: 'Enter Tag no'
+        description: 'Enter Tag no to merge & deploy the changes'
         required: true
         default: ''
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  pre-release:
-    name: "Pre Release"
+  deploy-release:
+    name: "deploy Release"
     runs-on: "ubuntu-latest"
 
     steps:
-      # ...
-      - name: "Create a tag for release"
-        run: |
-          echo "done!"
-          
-      - name: Create tag
+      # ... 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Merge tag into a branch
         uses: actions/github-script@v3
         with:
           github-token: ${{ github.token }}
           script: |
             console.log(context)
-            github.git.createRef({
+            github.repos.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/${{ github.event.inputs.tags }}",
-              sha: context.sha
+              base: "${{ steps.extract_branch.outputs.branch }}",
+              head: "${{ github.event.inputs.tags }}"
             })
-      - name: Create a release
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{ github.token }}
-          script: |
-            console.log(context)
-            github.repos.createRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag_name: "${{ github.event.inputs.tags }}"
-            })
+      - name: Checkout
+        uses: actions/checkout@v1
+      
+      
+
 
