@@ -49,6 +49,9 @@ jobs:
         uses: actions/setup-node@v1
       - run: npm install
       - run: npm build
+      - name: List build folder
+        shell: bash
+        run: ls -l
       
       
       
