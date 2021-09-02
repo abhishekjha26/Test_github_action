@@ -41,6 +41,7 @@ jobs:
           body_path: ${{ steps.tag_version.outputs.changelog }}
           body: ${{ steps.tag_version.outputs.changelog }}
           token: $${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
           
 #       - uses: "marvinpinto/action-automatic-releases@latest"
 #         with:
