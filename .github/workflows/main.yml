@@ -29,11 +29,16 @@ jobs:
       - name: "Build & test"
         run: |
           echo "done!"
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: ${{ steps.tag_version.outputs.new_tag }}
           prerelease: true
           title: "Development Build"
           files: |
