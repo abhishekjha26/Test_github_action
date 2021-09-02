@@ -42,7 +42,7 @@ jobs:
               ref: "refs/tags/${{ github.event.inputs.tags }}",
               sha: context.sha
             })
-      - name: Create tag
+      - name: Create a release
         uses: actions/github-script@v3
         with:
           github-token: ${{ github.token }}
