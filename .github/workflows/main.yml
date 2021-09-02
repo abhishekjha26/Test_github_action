@@ -46,8 +46,8 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            packages/automatic-releases/dist/index.js
-            packages/keybase-notifications/dist/index.js
+            readme.md
+            
         id: "automatic_releases"
         
 #       - name: Create a GitHub release
