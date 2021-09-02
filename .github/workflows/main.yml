@@ -38,7 +38,7 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: ${{ steps.tag_version.outputs.changelog }}
+          automatic_release_tag: ${{ steps.tag_version.outputs.new_tag }}
           prerelease: false
           title: "Development Build"
           
