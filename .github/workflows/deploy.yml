@@ -35,8 +35,12 @@ jobs:
             github.repos.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              base: "master",
+              base: context.repo.ref,
               head: "${{ github.event.inputs.tags }}"
             })
+      - name: Checkout
+        uses: actions/checkout@v1
       
+      
+
 
