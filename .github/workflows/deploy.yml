@@ -25,7 +25,11 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      # ...          
+      # ... 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Merge tag into a branch
         uses: actions/github-script@v3
         with:
@@ -35,8 +39,12 @@ jobs:
             github.repos.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              base: "master",
+              base: "${{ steps.extract_branch.outputs.branch }}",
               head: "${{ github.event.inputs.tags }}"
             })
+      - name: Checkout
+        uses: actions/checkout@v1
       
+      
+
 
