@@ -45,6 +45,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       
+      - name: setup Node environment
+        uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm build
+      
+      
       
 
 
