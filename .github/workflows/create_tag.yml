@@ -60,8 +60,8 @@ jobs:
           script: |
             console.log(context)
             const diff_url = context.payload.repository.commits_url
-            const result = await github.request(diff_url)
-            console.log(result)
+            #const result = await github.request(diff_url)
+            console.log(diff_url)
       - name: slack-send
         # You may pin to the exact commit or the version.
         # uses: slackapi/slack-github-action@d5d276d7ae0f38f29322b80da9baf985cc80f8b1
