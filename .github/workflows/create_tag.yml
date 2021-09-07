@@ -53,6 +53,16 @@ jobs:
               repo: context.repo.repo,
               tag_name: "${{ github.event.inputs.tags }}"
             })
+      - name: list commits
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            console.log(context)
+            github.repos.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
       - name: slack-send
         # You may pin to the exact commit or the version.
         # uses: slackapi/slack-github-action@d5d276d7ae0f38f29322b80da9baf985cc80f8b1
