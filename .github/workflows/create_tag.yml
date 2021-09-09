@@ -53,9 +53,9 @@ jobs:
               repo: context.repo.repo,
               tag_name: "${{ github.event.inputs.tags }}"
             })
-      - name: "Build Changelog"
+      - name: Release Changelog Builder
+        uses: mikepenz/release-changelog-builder-action@v2.4.0
         id: build_changelog
-        uses: mikepenz/release-changelog-builder-action@{latest-release}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: slack-send
