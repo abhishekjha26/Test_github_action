@@ -1,0 +1,25 @@
+name: 'CI'
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: slack-send
+        # You may pin to the exact commit or the version.
+        # uses: slackapi/slack-github-action@d5d276d7ae0f38f29322b80da9baf985cc80f8b1
+        uses: slackapi/slack-github-action@v1.15.0
+        with:
+         payload: "{\"tag\": \"${{ github.event.inputs.tags }}\", \"GitDiff\": \"${{steps.build_changelog.outputs.changelog}}\"}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
