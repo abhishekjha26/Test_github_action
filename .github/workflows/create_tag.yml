@@ -53,21 +53,16 @@ jobs:
               repo: context.repo.repo,
               tag_name: "${{ github.event.inputs.tags }}"
             })
-      - name: list commits
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{ github.token }}
-          script: |
-            console.log(context)
-            const diff_url = context.payload.repository.git_commits_url
-             console.log(diff_url)
-            const result = await github.request(diff_url)
-            console.log(result)
+      - name: "Build Changelog"
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@{latest-release}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: slack-send
         # You may pin to the exact commit or the version.
         # uses: slackapi/slack-github-action@d5d276d7ae0f38f29322b80da9baf985cc80f8b1
         uses: slackapi/slack-github-action@v1.15.0
         with:
-         payload: "{\"tag\": \"${{ github.event.inputs.tags }}\", \"GitDiff\": result}"
+         payload: "{\"tag\": \"${{ github.event.inputs.tags }}\", \"GitDiff\": ${{steps.build_changelog.outputs.changelog}}}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
