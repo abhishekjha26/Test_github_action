@@ -26,18 +26,10 @@ jobs:
 
     steps:
       # ...
-      - name: "Create a tag for release"
-        run: |
-          echo "done!"
-      - name: Release Changelog Builder
-        uses: mikepenz/release-changelog-builder-action@v2.4.0
-        id: build_changelog
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create tag
         uses: actions/github-script@v3
         with:
-          github-token: ${{ github.token }}
+          github-token: ${{ secrets.PAT }}
           script: |
             console.log(context)
             github.git.createRef({
@@ -49,7 +41,7 @@ jobs:
       - name: Create a release
         uses: actions/github-script@v3
         with:
-          github-token: ${{ github.token }}
+          github-token: ${{ secrets.PAT }}
           script: |
             console.log(context)
             github.repos.createRelease({
