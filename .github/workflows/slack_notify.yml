@@ -1,4 +1,4 @@
-name: 'CI'
+name: 'Send notification to Slack'
 on:
   push:
     tags:
