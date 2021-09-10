@@ -49,5 +49,20 @@ jobs:
               repo: context.repo.repo,
               tag_name: "${{ github.event.inputs.tags }}"
             })
-      
-     
+  findCommitDiff:
+       name: "Find a difference between tags"
+       runs-on: "ubuntu-latest"
+       steps:
+       - name: Git checkout
+         uses: actions/checkout@v2 
+       - name: Find previous Tag
+         id: previousTag
+         run: echo "::set-output name:previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
+       - name: find changes
+         run: |
+            echo "::set-output name:changeLog::$(git log '${{ steps.previousTag.outputs.previousTag }}'..'${{ github.event.inputs.tags }}' --pretty=\"%h - %s (%an)\")"
+         id: changeLog
+       - name: print Change Log
+         run: |
+            echo ${{steps.changeLog.outputs.changeLog}}
+         
