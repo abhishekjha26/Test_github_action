@@ -62,7 +62,7 @@ jobs:
          run: echo "::set-output name=previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
        - name: find changes
          run: |
-            echo "::set-output name=changeLog::$(git log '${{ steps.previousTag.outputs.previousTag }}'..'${{ github.event.inputs.tags }}' --pretty="%h - %s (%an)")"
+            echo "::set-output name=changeLog::$(git log '${{ steps.previousTag.outputs.previousTag }}'..'${{ github.event.inputs.tags }}' --pretty="%s (%an)")"
          id: changeLog
 #        - name: print Change Log
 #          run: |
