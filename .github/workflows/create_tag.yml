@@ -54,7 +54,9 @@ jobs:
        runs-on: "ubuntu-latest"
        steps:
        - name: Git checkout
-         uses: actions/checkout@v2 
+         uses: actions/checkout@v2
+         with:
+          fetch-depth: 0
        - name: Find previous Tag
          id: previousTag
          run: echo "::set-output name=previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
