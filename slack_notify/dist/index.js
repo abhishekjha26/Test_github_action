@@ -6343,7 +6343,14 @@ const github = __nccwpck_require__(134);
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `Github Action: *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
+                text: `<https://github.com/${github.context.repo.owner}/${github.context.repo.repo}| ${github.context.repo.owner}/${github.context.repo.repo}`,
+              },
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `Release Action: *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
               },
             },
           ],

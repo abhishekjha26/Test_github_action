@@ -17,7 +17,7 @@ const github = require('@actions/github');
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `Github Action: *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
+                text: `Release: *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
               },
             },
           ],
