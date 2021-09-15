@@ -6351,7 +6351,7 @@ const github = __nccwpck_require__(134);
       ],
     };
 
-    const rest = await fetch("https://slack.com/api/chat.postMessage", {
+    const res = await fetch("https://slack.com/api/chat.postMessage", {
       method: "POST",
       body: JSON.stringify(payload),
       headers: {
