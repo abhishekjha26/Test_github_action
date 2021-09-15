@@ -19,7 +19,7 @@ jobs:
          echo ${{ github.event }}
 
       - name: Slack Notification
-        uses: ./
+        uses: ./slack_notify
         with:
            job-status: ${{ job.status }}
            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
