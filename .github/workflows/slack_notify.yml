@@ -2,7 +2,7 @@ name: 'Send notification to Slack'
 on:
   release:
     type:
-      - created
+      - published
 
 jobs:
   release:
