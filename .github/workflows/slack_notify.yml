@@ -17,9 +17,9 @@ jobs:
         id: changelog
         run: |
          echo ${{ github.event }}
-
+      - uses: actions/checkout@v1
       - name: Slack Notification
-        uses: ./
+        uses: ./slack_notify
         with:
            job-status: ${{ job.status }}
            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
