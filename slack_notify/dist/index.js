@@ -6333,17 +6333,35 @@ const github = __nccwpck_require__(134);
 (async() => {
   try {
     const status = core.getInput("job-status");
+    let runDetails = `Run details: <https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId} | ${github.context.runId} run details> \n`;
+    
     const payload = {
       channel: `${core.getInput("channel")}`,
+      content: `${core.getInput("ChangeLog")}`,
       attachments: [
         {
           color: status === "success" ? "#2e993e" : status === "failure" ? "#bd0f26" : "#d29d0c",
           blocks: [
             {
+              type: "context",
+              elements: [
+                {
+                  type: "image",
+                  image_url:
+                    "https://avatars0.githubusercontent.com/u/9919?s=280&v=4",
+                  alt_text: "images",
+                },
+                {
+                  type: "mrkdwn",
+                  text: `<https://github.com/${github.context.repo.owner}/${github.context.repo.repo}| ${github.context.repo.owner}/${github.context.repo.repo}>`,
+                },
+              ],
+            },
+            {
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `<https://github.com/${github.context.repo.owner}/${github.context.repo.repo}| ${github.context.repo.owner}/${github.context.repo.repo}`,
+                text: `${runDetails}${content}`,
               },
             },
             {
