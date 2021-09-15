@@ -6337,7 +6337,7 @@ const github = __nccwpck_require__(134);
     
     const payload = {
       channel: `${core.getInput("channel")}`,
-      content: `${core.getInput("ChangeLog")}`,
+      content: `${core.getInput("content")}`,
       attachments: [
         {
           color: status === "success" ? "#2e993e" : status === "failure" ? "#bd0f26" : "#d29d0c",
