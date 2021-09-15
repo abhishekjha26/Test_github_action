@@ -1,7 +1,7 @@
 name: 'Send notification to Slack'
 on:
   release:
-    type:
+    types:
       - published
 
 jobs:
