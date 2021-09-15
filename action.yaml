@@ -1,0 +1,16 @@
+name: 'Slack Notify Module'
+description: 'This module will send a slack notification'
+inputs:
+  job-status:  # id of input
+    description: 'Job status of the github action workflow'
+    required: true
+  slack-bot-token: # Slack app bot token to send message to slack channel
+    required: true
+  channel: # channel name to send a message
+    required: true
+# outputs:
+#   time: # id of output
+#     description: 'The time we greeted you'
+runs:
+  using: 'node12'
+  main: 'slack.js'
