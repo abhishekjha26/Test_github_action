@@ -6333,6 +6333,8 @@ const github = __nccwpck_require__(134);
 (async() => {
   try {
     const status = core.getInput("job-status");
+    const content =  core.getInput("content");
+    console.log(content)
     let runDetails = `Run details: <https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId} | ${github.context.runId} run details> \n`;
     
     const payload = {
