@@ -51,6 +51,7 @@ jobs:
             })
   findCommitDiff:
        name: "Find a difference between tags"
+       needs: [createTag]
        runs-on: "ubuntu-latest"
        steps:
        - name: Git checkout
