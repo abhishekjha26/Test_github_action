@@ -1,8 +1,8 @@
 name: 'Send notification to Slack'
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    type:
+      - created
 
 jobs:
   release:
@@ -18,11 +18,9 @@ jobs:
         run: |
          echo ${{ github.event }}
 
-      - name: slack-send
-        # You may pin to the exact commit or the version.
-        # uses: slackapi/slack-github-action@d5d276d7ae0f38f29322b80da9baf985cc80f8b1
-        uses: slackapi/slack-github-action@v1.15.0
-        with:
-         payload: "{\"tag\": \"${{ github.event.inputs.tags }}\", \"GitDiff\": \"${{steps.build_changelog.outputs.changelog}}\"}"
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+           SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
+
+
