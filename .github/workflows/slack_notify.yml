@@ -24,6 +24,7 @@ jobs:
            job-status: ${{ job.status }}
            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
            channel: devops
+           content: 'This is a change log '
 #         uses: rtCamp/action-slack-notify@v2
 #         env:
 #            SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
