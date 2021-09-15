@@ -24,6 +24,6 @@ jobs:
            SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
            SLACK_CHANNEL: githubaction
            SLACK_TITLE: New Release has been created
-           SLACK_MESSAGE: Kindly review the release\n Run deploy a tag worfkflow to deploy the latest change. ${{ github.event.html_url }}
+           SLACK_MESSAGE: 'Kindly review the release\n Run deploy a tag worfkflow to deploy the latest change. ${{ github.event.html_url }}'
 
 
