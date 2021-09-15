@@ -65,9 +65,9 @@ jobs:
          run: |
             echo "::set-output name=changeLog::$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.inputs.tags }} --pretty="%s (%an)")"
          id: changeLog
-       - name: print Change Log
-         run: |
-            echo ${{ steps.changeLog.outputs.changeLog }}
+#        - name: print Change Log
+#          run: |
+#             echo ${{ steps.changeLog.outputs.changeLog }}
        - name: slack-send
          uses: slackapi/slack-github-action@v1.15.0
          with:
