@@ -19,11 +19,16 @@ jobs:
          echo ${{ github.event }}
 
       - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-           SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
-           SLACK_CHANNEL: githubaction
-           SLACK_TITLE: New Release has been created
-           SLACK_MESSAGE: 'Kindly review the release\n Run deploy a tag worfkflow to deploy the latest change. ${{ github.event.html_url }}'
+        uses: ./slack.js
+        with:
+           job-status: ${{ job.status }}
+           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+           channel: devops
+#         uses: rtCamp/action-slack-notify@v2
+#         env:
+#            SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
+#            SLACK_CHANNEL: githubaction
+#            SLACK_TITLE: New Release has been created
+#            SLACK_MESSAGE: 'Kindly review the release\n Run deploy a tag worfkflow to deploy the latest change. ${{ github.event.html_url }}'
 
 
