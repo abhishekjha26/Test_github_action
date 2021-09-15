@@ -17,7 +17,7 @@ jobs:
         id: changelog
         run: |
          echo ${{ github.event }}
-
+      - uses: actions/checkout@v1
       - name: Slack Notification
         uses: ./slack_notify
         with:
