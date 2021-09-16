@@ -6336,7 +6336,7 @@ const github = __nccwpck_require__(134);
     const content =  core.getInput("content");
     console.log(content)
     console.log(github.context)
-    let runDetails = `*Run details:* <https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId} | ${github.context.runId} run details> \n`;
+    let runDetails = `*Run details:*\n <https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId} | ${github.context.runId} run details> \n`;
     
     const payload = {
       channel: `${core.getInput("channel")}`,
@@ -6349,7 +6349,7 @@ const github = __nccwpck_require__(134);
               type: "section",
               text: {
               type: "mrkdwn",
-              text: `New Release has been created Below is the release URL:\n*<${github.context.payload.release.html_url}| Repo>*`
+              text: `New Release has been created Below is the release URL:\n*<${github.context.payload.release.html_url}| Clik to check the release details>*`
               }
             },
             {
@@ -6369,17 +6369,24 @@ const github = __nccwpck_require__(134);
             },
             {
               type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `${runDetails}${content}`,
-              },
-            },
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `Release Action: *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
-              },
+              fields: [
+                {
+                  type: "mrkdwn",
+                  text: `${runDetails}${content}`,
+                },
+                {
+                  type: "mrkdwn",
+                  text: `*Changes*\n${content}`,
+                },
+                {
+                  type: "mrkdwn",
+                  text: `**Release Action:** *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
+                },
+                {
+                  type: "mrkdwn",
+                  text: `<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>`,
+                }
+              ]
             },
           ],
         },
