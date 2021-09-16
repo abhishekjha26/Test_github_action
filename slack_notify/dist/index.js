@@ -6349,7 +6349,7 @@ const github = __nccwpck_require__(134);
               type: "section",
               text: {
               type: "mrkdwn",
-              text: "New Release has been created Below is the release URL:\n*<${github.context.repo.owner}| Repo>*"
+              text: `New Release has been created Below is the release URL:\n*<${github.context.payload.release.html_url}| Repo>*`
               }
             },
             {
