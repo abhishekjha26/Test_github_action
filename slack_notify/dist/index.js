@@ -6335,7 +6335,8 @@ const github = __nccwpck_require__(134);
     const status = core.getInput("job-status");
     const content =  core.getInput("content");
     console.log(content)
-    let runDetails = `Run details: <https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId} | ${github.context.runId} run details> \n`;
+    console.log(github.context)
+    let runDetails = `*Run details:* <https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId} | ${github.context.runId} run details> \n`;
     
     const payload = {
       channel: `${core.getInput("channel")}`,
@@ -6344,6 +6345,13 @@ const github = __nccwpck_require__(134);
         {
           color: status === "success" ? "#2e993e" : status === "failure" ? "#bd0f26" : "#d29d0c",
           blocks: [
+            {
+              type: "section",
+              text: {
+              type: "mrkdwn",
+              text: "New Release has been created Below is the release URL:\n*<${github.context.repo.owner}| Repo>*"
+              }
+            },
             {
               type: "context",
               elements: [
