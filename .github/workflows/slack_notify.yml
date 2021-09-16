@@ -18,13 +18,21 @@ jobs:
         run: |
          echo ${{ github.event }}
       - uses: actions/checkout@v1
+      - name: Find previous Tag
+        id: previousTag
+        run: echo "::set-output name=previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
+      - name: find changes
+        run: |
+            echo "::set-output name=changeLog::$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.tag_name }} --pretty="%s (%an)")"
+        id: changeLog
       - name: Slack Notification
         uses: ./slack_notify
         with:
            job-status: ${{ job.status }}
            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
            channel: devops
-           content: 'change log'
+           content: ${{ steps.changeLog.outputs.changeLog }}
+           
 #         uses: rtCamp/action-slack-notify@v2
 #         env:
 #            SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
