@@ -1,0 +1,43 @@
+name: 'Send notification to Slack'
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  release:
+#     if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Build Changelog
+        run: |
+         echo ${{ github.event }}
+      - uses: actions/checkout@v1
+      - name: Find previous Tag
+        id: previousTag
+        run: echo "::set-output name=previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
+      - name: find changes
+        run: |
+            echo $GITHUB_CONTEXT.event.release.tag_name
+            echo "::set-output name=commitdiff::$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.release.tag_name }} --pretty="%s (%an)")"
+        id: changeLog
+      - name: Slack Notification
+        uses: ./slack_notify
+        with:
+           job-status: ${{ job.status }}
+           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+           channel: githubaction
+           content: ${{ steps.changeLog.outputs.commitdiff }}
+           
+#         uses: rtCamp/action-slack-notify@v2
+#         env:
+#            SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
+#            SLACK_CHANNEL: githubaction
+#            SLACK_TITLE: New Release has been created
+#            SLACK_MESSAGE: 'Kindly review the release\n Run deploy a tag worfkflow to deploy the latest change. ${{ github.event.html_url }}'
+
+
