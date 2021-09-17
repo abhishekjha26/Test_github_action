@@ -75,7 +75,7 @@ jobs:
            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
            channel: githubaction
            content: ${{ steps.changeLog.outputs.commitdiff }}
-           releaseUrl: "https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/releases/tags/${github.event.inputs.tags}"
+#            releaseUrl: "https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/releases/tags/${github.event.inputs.tags}"
 #   findCommitDiff:
 #        name: "Find a difference between tags"
 #        needs: [createTag]
