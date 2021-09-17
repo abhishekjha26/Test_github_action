@@ -9,7 +9,9 @@ inputs:
   channel: # channel name to send a message
     required: true
   content: # Send change log
-    required: false
+    required: true
+  releaseUrl: # release url 
+    required: true
 # outputs:
 #   time: # id of output
 #     description: 'The time we greeted you'
