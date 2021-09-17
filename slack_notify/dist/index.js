@@ -6341,6 +6341,7 @@ const github = __nccwpck_require__(134);
     const payload = {
       channel: `${core.getInput("channel")}`,
       content: `${core.getInput("content")}`,
+      releaseUrl: `${core.getInput("releaseUrl")}`,
       attachments: [
         {
           color: status === "success" ? "#2e993e" : status === "failure" ? "#bd0f26" : "#d29d0c",
@@ -6349,7 +6350,7 @@ const github = __nccwpck_require__(134);
               type: "section",
               text: {
               type: "mrkdwn",
-              text: `New Release has been created Below is the release URL:\n*<${github.context.payload.release.html_url}| Clik to check the release details>*`
+              text: `New Release has been created Below is the release URL:\n*<${releaseUrl}| Clik to check the release details>*`
               }
             },
             {
