@@ -6369,19 +6369,43 @@ const github = __nccwpck_require__(134);
             },
             {
               type: "section",
-              elements: [
-                {
-                  type: "mrkdwn",
-                  text: `${runDetails}${content}`,
-                },
-                {
-                  type: "mrkdwn",
-                  text: `*Changes*\n${content}`,
-                },
-                {
-                  type: "mrkdwn",
-                  text: `*Release Action:* *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
-                },
+              text: {
+                type: "mrkdwn",
+                text: `${runDetails}${content}`,
+
+              },
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `*Changes*\n${content}\n*Release Action:* *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*\n`,
+
+              },
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `*<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>*`,
+
+              },
+            },
+            {
+              type: "section",
+              fields: [
+                // {
+                //   type: "mrkdwn",
+                //   text: `${runDetails}${content}`,
+                // },
+                // {
+                //   type: "mrkdwn",
+                //   text: `*Changes*\n${content}`,
+                // },
+                // {
+                //   type: "mrkdwn",
+                //   text: `*Release Action:* *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
+                // },
                 {
                   type: "mrkdwn",
                   text: `*<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>*`,
