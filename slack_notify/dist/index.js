@@ -6353,6 +6353,13 @@ const github = __nccwpck_require__(134);
               }
             },
             {
+              type: "section",
+              text: {
+              type: "mrkdwn",
+              text: `Tag_Name:\n*<${github.context.payload.release.tag_name}>*`
+              }
+            },
+            {
               type: "context",
               elements: [
                 {
@@ -6371,7 +6378,7 @@ const github = __nccwpck_require__(134);
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `${runDetails}${content}`,
+                text: `${runDetails}`,
 
               },
             },
@@ -6406,10 +6413,10 @@ const github = __nccwpck_require__(134);
                 //   type: "mrkdwn",
                 //   text: `*Release Action:* *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
                 // },
-                {
-                  type: "mrkdwn",
-                  text: `*<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>*`,
-                }
+                // {
+                //   type: "mrkdwn",
+                //   text: `*<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>*`,
+                // }
               ]
             },
           ],
