@@ -34,7 +34,7 @@ jobs:
             console.log(context)
             github.git.createRef({
               owner: context.repo.owner,
-              repo: develop,
+              repo: "develop",
               ref: "refs/tags/${{ github.event.inputs.tags }}",
               sha: context.sha
             })
