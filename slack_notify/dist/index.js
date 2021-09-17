@@ -6369,7 +6369,7 @@ const github = __nccwpck_require__(134);
             },
             {
               type: "section",
-              elements: [
+              fields: [
                 {
                   type: "mrkdwn",
                   text: `${runDetails}${content}`,
