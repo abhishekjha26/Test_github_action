@@ -46,7 +46,7 @@ jobs:
             console.log(context)
             github.repos.createRelease({
               owner: context.repo.owner,
-              repo: develop,
+              repo: "develop",
               tag_name: "${{ github.event.inputs.tags }}"
               prerelease: true
             })
