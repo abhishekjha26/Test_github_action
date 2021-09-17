@@ -6390,14 +6390,14 @@ const github = __nccwpck_require__(134);
 
               },
             },
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `*<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>*`,
+            // {
+            //   type: "section",
+            //   text: {
+            //     type: "mrkdwn",
+            //     text: `*<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>*`,
 
-              },
-            },
+            //   },
+            // },
             {
               type: "section",
               fields: [
@@ -6413,10 +6413,10 @@ const github = __nccwpck_require__(134);
                 //   type: "mrkdwn",
                 //   text: `*Release Action:* *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
                 // },
-                // {
-                //   type: "mrkdwn",
-                //   text: `*<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>*`,
-                // }
+                {
+                  type: "mrkdwn",
+                  text: `*<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>*`,
+                }
               ]
             },
           ],
