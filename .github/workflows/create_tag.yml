@@ -34,7 +34,7 @@ jobs:
             console.log("this is repo" + context.repo.repo)
             github.git.createRef({
               owner: context.repo.owner,
-              repo: "develop",
+              repo: context.repo.repo,
               ref: "refs/tags/${{ github.event.inputs.tags }}",
               sha: context.sha
             })
@@ -46,7 +46,7 @@ jobs:
             console.log("this is repo" + context.repo.repo)
             github.repos.createRelease({
               owner: context.repo.owner,
-              repo: "develop",
+              repo: context.repo.repo,
               tag_name: "${{ github.event.inputs.tags }}"
               prerelease: true
             })
