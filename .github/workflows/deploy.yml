@@ -38,7 +38,7 @@ jobs:
             console.log(context)
             github.repos.merge({
               owner: context.repo.owner,
-              repo: context.repo.repo,
+              repo: master,
               base: "${{ steps.extract_branch.outputs.branch }}",
               head: "${{ github.event.inputs.tags }}"
             })
