@@ -34,7 +34,7 @@ jobs:
             console.log(context)
             github.git.createRef({
               owner: context.repo.owner,
-              repo: context.repo.repo,
+              repo: develop,
               ref: "refs/tags/${{ github.event.inputs.tags }}",
               sha: context.sha
             })
@@ -46,8 +46,9 @@ jobs:
             console.log(context)
             github.repos.createRelease({
               owner: context.repo.owner,
-              repo: context.repo.repo,
+              repo: develop,
               tag_name: "${{ github.event.inputs.tags }}"
+              prerelease: true
             })
 #   findCommitDiff:
 #        name: "Find a difference between tags"
