@@ -43,7 +43,7 @@ jobs:
         with:
           github-token: ${{ secrets.PAT }}
           script: |
-            console.log(context.repo.repo)
+            console.log("this is repo" + context.repo.repo)
             github.repos.createRelease({
               owner: context.repo.owner,
               repo: "develop",
