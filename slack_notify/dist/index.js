@@ -6356,7 +6356,7 @@ const github = __nccwpck_require__(134);
               type: "section",
               text: {
               type: "mrkdwn",
-              text: `*Tag_Name*:\n*${github.context.payload.release.tag_name}*`
+              text: `*Tag_Name*: ${github.context.payload.release.tag_name}`
               }
             },
             {
