@@ -1,6 +1,9 @@
 name: 'Send notification to Slack'
 on:
-  release:
+ push:
+   tags:
+   - "*"
+ release:
     types:
       - published
 

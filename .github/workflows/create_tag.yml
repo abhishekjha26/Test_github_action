@@ -31,7 +31,7 @@ jobs:
         with:
           github-token: ${{ secrets.PAT }}
           script: |
-            console.log(context)
+            console.log("this is repo" + context)
             github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -43,12 +43,38 @@ jobs:
         with:
           github-token: ${{ secrets.PAT }}
           script: |
-            console.log(context)
+            console.log("this is repo" + context.repo.repo)
             github.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: "${{ github.event.inputs.tags }}"
+              tag_name: "${{ github.event.inputs.tags }}",
+              prerelease: true
             })
+      
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Build Changelog
+        run: |
+         echo ${{ github.event }}
+      - uses: actions/checkout@v1
+      - name: Find previous Tag
+        id: previousTag
+        run: echo "::set-output name=previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
+      - name: find changes
+        run: |
+            echo $GITHUB_CONTEXT.event.release.tag_name
+            echo "::set-output name=commitdiff::$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.release.tag_name }} --pretty="%s (%an)")"
+        id: changeLog
+      - name: Slack Notification
+        if: ${{ github.ref == 'refs/heads/develop' }}
+        uses: ./slack_notify
+        with:
+           job-status: ${{ job.status }}
+           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+           channel: githubaction
+           content: ${{ steps.changeLog.outputs.commitdiff }}
 #   findCommitDiff:
 #        name: "Find a difference between tags"
 #        needs: [createTag]

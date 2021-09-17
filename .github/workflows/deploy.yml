@@ -39,7 +39,7 @@ jobs:
             github.repos.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              base: "${{ steps.extract_branch.outputs.branch }}",
+              base: "master",
               head: "${{ github.event.inputs.tags }}"
             })
       - name: Checkout
