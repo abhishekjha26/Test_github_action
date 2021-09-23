@@ -31,7 +31,7 @@ jobs:
             changes="${changes//$'\r'/'%0D'}"
             echo $changes
             echo $GITHUB_CONTEXT.event.release.tag_name
-            echo "::set-output name=commitdiff::$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.release.tag_name }} --pretty="%s (%an)")"
+            echo "::set-output name=commitdiff::$changes"
         id: changeLog
       - name: Slack Notification
         uses: ./slack_notify
