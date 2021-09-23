@@ -25,7 +25,7 @@ jobs:
         run: echo "::set-output name=previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
       - name: find changes
         run: |
-            changes=git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.release.tag_name }} --pretty="%s (%an)"
+            changes=$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.release.tag_name }} --pretty="%s (%an)")
             echo $changes
             echo $GITHUB_CONTEXT.event.release.tag_name
             echo "::set-output name=commitdiff::$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.release.tag_name }} --pretty="%s (%an)")"
