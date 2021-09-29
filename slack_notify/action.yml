@@ -10,7 +10,7 @@ inputs:
     required: true
   content: # Send change log
     required: true
-  releaseUrl: # release url 
+  actionurl: # release url 
     required: true
 # outputs:
 #   time: # id of output
