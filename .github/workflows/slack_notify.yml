@@ -6,7 +6,9 @@ on:
  release:
     types:
       - published
-
+env:
+ GITHUB_URL: $GITHUB_SERVER_URL
+ REPO: $GITHUB_REPOSITORY
 jobs:
   release:
 #     if: startsWith(github.ref, 'refs/tags/')
@@ -41,7 +43,7 @@ jobs:
            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
            channel: githubaction
            content: ${{ steps.changeLog.outputs.commitdiff }}
-           actionurl: ${{ GITHUB_SERVER_URL }}/${{ GITHUB_REPOSITORY }}/actions/runs/${{ GITHUB_RUN_ID }}
+           actionurl: ${{ env.GITHUB_SERVER_URL }}/${{ env.GITHUB_REPOSITORY }}/actions/runs/${{ env.GITHUB_RUN_ID }}
            
 #         uses: rtCamp/action-slack-notify@v2
 #         env:
