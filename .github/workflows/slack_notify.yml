@@ -41,7 +41,7 @@ jobs:
            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
            channel: githubaction
            content: ${{ steps.changeLog.outputs.commitdiff }}
-           actionurl: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+           actionurl: ${{ GITHUB_SERVER_URL }}/${{ GITHUB_REPOSITORY }}/actions/runs/${{ GITHUB_RUN_ID }}
            
 #         uses: rtCamp/action-slack-notify@v2
 #         env:
