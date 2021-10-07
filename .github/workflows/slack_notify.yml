@@ -33,7 +33,7 @@ jobs:
             echo $GITHUB_CONTEXT.event.release.tag_name
             echo "::set-output name=commitdiff::$changes"
         id: changeLog
-      - run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+    
       - name: Slack Notification
         uses: ./slack_notify
         with:
