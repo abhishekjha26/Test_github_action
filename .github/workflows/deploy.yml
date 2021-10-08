@@ -46,6 +46,15 @@ jobs:
         uses: actions/checkout@v1
       - name: gihub context
         run: echo ${{ github.ref }}
+        
+      - name: Slack Notification
+        uses: ./slack_notify
+        with:
+           job-status: ${{ job.status }}
+           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+           channel: githubaction
+           content: "Tag: ${{ github.event.inputs.tags }} has been deployed successfully"
+           actionurl: ${{ env.GITHUB_URL }}/${{ env.REPO }}/actions/runs/${{ env.GITHUB_RUN_ID }}
       
 #       - name: setup Node environment
 #         uses: actions/setup-node@v1
