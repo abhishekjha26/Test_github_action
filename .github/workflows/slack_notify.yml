@@ -6,7 +6,9 @@ on:
  release:
     types:
       - published
-
+env:
+ GITHUB_URL: $GITHUB_SERVER_URL
+ REPO: $GITHUB_REPOSITORY
 jobs:
   release:
 #     if: startsWith(github.ref, 'refs/tags/')
@@ -25,9 +27,15 @@ jobs:
         run: echo "::set-output name=previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
       - name: find changes
         run: |
+            changes=$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.release.tag_name }} --pretty="%s (%an)")
+            changes="${changes//'%'/'%25'}"
+            changes="${changes//$'\n'/'%0A'}"
+            changes="${changes//$'\r'/'%0D'}"
+            echo $changes
             echo $GITHUB_CONTEXT.event.release.tag_name
-            echo "::set-output name=commitdiff::$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.release.tag_name }} --pretty="%s (%an)")"
+            echo "::set-output name=commitdiff::$changes"
         id: changeLog
+    
       - name: Slack Notification
         uses: ./slack_notify
         with:
@@ -35,6 +43,7 @@ jobs:
            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
            channel: githubaction
            content: ${{ steps.changeLog.outputs.commitdiff }}
+           actionurl: ${{ env.GITHUB_URL }}/${{ env.REPO }}/actions/runs/${{ env.GITHUB_RUN_ID }}
            
 #         uses: rtCamp/action-slack-notify@v2
 #         env:

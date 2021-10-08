@@ -6334,13 +6334,14 @@ const github = __nccwpck_require__(134);
   try {
     const status = core.getInput("job-status");
     const content =  core.getInput("content");
+    const actionurl = core.getInput("actionurl");
     console.log(content)
     console.log(github.context)
     let runDetails = `*Run details:*\n <https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId} | ${github.context.runId} run details> \n`;
     
     const payload = {
       channel: `${core.getInput("channel")}`,
-      content: `${core.getInput("content")}`,
+      content: `${core.getInput("content")}`, 
       attachments: [
         {
           color: status === "success" ? "#2e993e" : status === "failure" ? "#bd0f26" : "#d29d0c",
@@ -6415,7 +6416,7 @@ const github = __nccwpck_require__(134);
                 // },
                 {
                   type: "mrkdwn",
-                  text: `*<https://github.com/abhishekjha26/Test_github_action/actions/workflows/deploy.yml | Click to deploy>*`,
+                  text: `*<${actionurl} | Click to deploy>*`,
                 }
               ]
             },
