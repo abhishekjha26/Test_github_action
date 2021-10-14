@@ -31,6 +31,7 @@ jobs:
         with:
           github-token: ${{ secrets.PAT }}
           script: |
+            console.log(context.repo.repo)
             console.log("this is repo" + context)
             github.git.createRef({
               owner: context.repo.owner,
