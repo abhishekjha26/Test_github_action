@@ -26,19 +26,32 @@ jobs:
 
     steps:
       # ...
-      - name: Create tag
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{ secrets.PAT }}
-          script: |
-            console.log(context.repo.repo)
-            console.log("this is repo" + context)
-            github.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/${{ github.event.inputs.tags }}",
-              sha: context.sha
-            })
+      - name: checkout
+        uses: actions/checkout@v2
+        
+      - name: setup git config
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git config user.name "CI/CD"
+          git config user.email "<>"
+      - name: create a tag
+        run: |
+          git tag ${{ github.event.inputs.tags }}
+          git push origin --tags
+
+#       - name: Create tag
+#         uses: actions/github-script@v3
+#         with:
+#           github-token: ${{ secrets.PAT }}
+#           script: |
+#             console.log(context.repo.repo)
+#             console.log("this is repo" + context)
+#             github.git.createRef({
+#               owner: context.repo.owner,
+#               repo: context.repo.repo,
+#               ref: "refs/tags/${{ github.event.inputs.tags }}",
+#               sha: context.sha
+#             })
       - name: Create a release
         uses: actions/github-script@v3
         with:
