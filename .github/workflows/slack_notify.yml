@@ -47,6 +47,15 @@ jobs:
            content: ${{ steps.changeLog.outputs.commitdiff }}
            actionurl: ${{ env.GITHUB_URL }}/${{ env.REPO }}/actions/runs/${{ env.GITHUB_RUN_ID }}
            
+      - name: Slack Notification
+        uses: ./slack_notify
+        with:
+           job-status: ${{ job.status }}
+           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+           channel: devops
+           content: ${{ steps.changeLog.outputs.commitdiff }}
+           actionurl: ${{ env.GITHUB_URL }}/${{ env.REPO }}/actions/runs/${{ env.GITHUB_RUN_ID }}
+           
 #         uses: rtCamp/action-slack-notify@v2
 #         env:
 #            SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
