@@ -18,6 +18,7 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
+      - run: echo $github.event.release.prerelease
       - name: Build Changelog
         run: |
          echo ${{ github.event }}
@@ -37,11 +38,22 @@ jobs:
         id: changeLog
     
       - name: Slack Notification
+        if: ${{ github.event.release.prerelease }}
         uses: ./slack_notify
         with:
            job-status: ${{ job.status }}
            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
            channel: githubaction
+           content: ${{ steps.changeLog.outputs.commitdiff }}
+           actionurl: ${{ env.GITHUB_URL }}/${{ env.REPO }}/actions/runs/${{ env.GITHUB_RUN_ID }}
+           
+      - name: Slack Notification
+        if: ${{ !github.event.release.prerelease }}
+        uses: ./slack_notify
+        with:
+           job-status: ${{ job.status }}
+           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+           channel: devops
            content: ${{ steps.changeLog.outputs.commitdiff }}
            actionurl: ${{ env.GITHUB_URL }}/${{ env.REPO }}/actions/runs/${{ env.GITHUB_RUN_ID }}
            

@@ -17,92 +17,79 @@ on:
         description: 'Enter Tag no'
         required: true
         default: ''
+      environment:
+        description: 'Create a tag for: staging/production'
+        required: true
+        default: 'staging'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   createTag:
+    if: ${{ github.event.inputs.environment == 'staging' }}
     name: "Create Tag"
     runs-on: "ubuntu-latest"
 
     steps:
       # ...
-      - name: Create tag
-        uses: actions/github-script@v3
+      - name: checkout
+        uses: actions/checkout@v2
         with:
-          github-token: ${{ secrets.PAT }}
-          script: |
-            console.log("this is repo" + context)
-            github.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/${{ github.event.inputs.tags }}",
-              sha: context.sha
-            })
+          ref: 'develop'
+        
+      - name: setup git config
+        run: |
+          echo "creating tag from develop branch to deploy"
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git config user.name "CI/CD"
+          git config user.email "<>"
+      - name: create a tag
+        run: |
+          git tag ${{ github.event.inputs.tags }}
+          git push origin --tags
+
       - name: Create a release
         uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.PAT }}
           script: |
-            console.log("this is repo" + context.repo.repo)
+            console.log(context)
             github.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: "${{ github.event.inputs.tags }}",
               prerelease: true
             })
-      
-#       - name: Dump GitHub context
-#         env:
-#           GITHUB_CONTEXT: ${{ toJSON(github) }}
-#         run: echo "$GITHUB_CONTEXT"
-#       - name: Build Changelog
-#         run: |
-#          echo ${{ github.event }}
-#       - uses: actions/checkout@v1
-#       - name: Find previous Tag
-#         id: previousTag
-#         run: echo "::set-output name=previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
-#       - name: find changes
-#         run: |
-#             echo $GITHUB_CONTEXT.event.release.tag_name
-#             echo "::set-output name=commitdiff::$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.release.tag_name }} --pretty="%s (%an)")"
-#         id: changeLog
-#       - name: Slack Notification
-#         if: ${{ github.ref == 'refs/heads/develop' }}
-#         uses: ./slack_notify
-#         with:
-#            job-status: ${{ job.status }}
-#            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-#            channel: githubaction
-#            content: ${{ steps.changeLog.outputs.commitdiff }}
-# #            releaseUrl: "https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/releases/tags/${github.event.inputs.tags}"
-#   findCommitDiff:
-#        name: "Find a difference between tags"
-#        needs: [createTag]
-#        runs-on: "ubuntu-latest"
-#        steps:
-#        - name: Git checkout
-#          uses: actions/checkout@v2
-#          with:
-#           fetch-depth: 0
-#        - name: Find previous Tag
-#          id: previousTag
-#          run: echo "::set-output name=previousTag::$(git tag --sort=-committerdate | head -2  | tail -1)"
-#        - name: find changes
-#          run: |
-#             echo "::set-output name=commitdiff::$(git log ${{ steps.previousTag.outputs.previousTag }}..${{ github.event.inputs.tags }} --pretty="%s (%an)")"
-#          id: changeLog
-#        - name: print Change Log
-#          run: |
-#             echo ${{ steps.changeLog.outputs.changeLog }}
-#        - name: slack-send
-#          uses: slackapi/slack-github-action@v1.15.0
-#          with:
-#            payload: "{\"tag\": \"${{ github.event.inputs.tags }}\", \"GitDiff\": \"${{ steps.changeLog.outputs.commitdiff }}\"}"
-#          env:
-#             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#        - name: Slack Notification
-#          uses: rtCamp/action-slack-notify@v2
-#          env:
-#            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  createTag-production:
+    if: ${{ github.event.inputs.environment == 'production' }}
+    name: "Create a Tag"
+    runs-on: "ubuntu-latest"
 
+    steps:
+      # ...
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: 'master'
+        
+      - name: setup git config
+        run: |
+          echo "creating tag from develop branch"
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git config user.name "CI/CD"
+          git config user.email "<>"
+      - name: create a tag
+        run: |
+          git tag ${{ github.event.inputs.tags }}
+          git push origin --tags
+
+      - name: Create a release
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            console.log(context)
+            github.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: "${{ github.event.inputs.tags }}"
+            })
