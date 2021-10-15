@@ -48,6 +48,7 @@ jobs:
            actionurl: ${{ env.GITHUB_URL }}/${{ env.REPO }}/actions/runs/${{ env.GITHUB_RUN_ID }}
            
       - name: Slack Notification
+        if: ${{ !github.event.release.prerelease }}
         uses: ./slack_notify
         with:
            job-status: ${{ job.status }}
