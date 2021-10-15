@@ -38,7 +38,7 @@ jobs:
         id: changeLog
     
       - name: Slack Notification
-        if: $github.event.release.prerelease
+        if: ${{ github.event.release.prerelease }}
         uses: ./slack_notify
         with:
            job-status: ${{ job.status }}
