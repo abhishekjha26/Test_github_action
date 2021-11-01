@@ -17,6 +17,8 @@ on:
         description: 'Enter Tag no to merge & deploy the changes'
         required: true
         default: ''
+env:
+ ENVIRONMENT: 'test'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -54,7 +56,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.14.0
         with:
           channel-id: 'githubaction'  # Slack channel id to post message
-          slack-message: 'Tag: ${{ github.event.inputs.tags }} for ${{ github.event.repository.name }} has been deployed successfully'
+          slack-message: 'Tag: ${{ github.event.inputs.tags }} for ${{ process.env.ENVIRONMENT }} has been deployed successfully'
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       
