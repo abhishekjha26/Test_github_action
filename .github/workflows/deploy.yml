@@ -48,7 +48,7 @@ jobs:
         run: echo ${{ github.ref }}
       - run: |
  
-         echo ${{ github.context.env.GITHUB_REPOSITORY }}
+         echo ${{ github.context.env.github_repository }}
       - name: Post to a Slack channel
         id: slack
         uses: slackapi/slack-github-action@v1.14.0
