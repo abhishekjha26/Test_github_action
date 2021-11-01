@@ -56,7 +56,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.14.0
         with:
           channel-id: 'githubaction'  # Slack channel id to post message
-          slack-message: 'Tag: ${{ github.event.inputs.tags }} for ${{ process.env.ENVIRONMENT }} has been deployed successfully'
+          slack-message: 'Tag: ${{ github.event.inputs.tags }} for ${{ ENVIRONMENT }} has been deployed successfully'
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       
