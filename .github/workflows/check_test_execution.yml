@@ -16,5 +16,5 @@ jobs:
       run: exit 0
     - name: Check tr-server test execution failure
       if: ${{ github.event.client_payload.job_success  == 'failure' }}
-      run: exit 0
+      run: exit 1
   
