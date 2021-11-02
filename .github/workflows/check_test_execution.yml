@@ -12,6 +12,6 @@ jobs:
     - run: |
        echo ${{ github.event.client_payload.job_success }}
     - name: Check tr-server test execution success
-      if: ${{ github.event.client_payload.job_success }} == 'success'
+      if: ${{ github.event.client_payload.job_success  == 'success' }}
       run: exit 0
   
