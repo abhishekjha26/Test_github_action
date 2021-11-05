@@ -47,7 +47,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: gihub context
-        run: echo ${{ github.ref }}
+        run: echo ${{ github.env }}
       - run: |
  
          echo ${{ github.context.env.github_repository }}
