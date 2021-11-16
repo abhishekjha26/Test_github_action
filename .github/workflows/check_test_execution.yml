@@ -9,12 +9,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - run: |
-       echo ${{ github.event.client_payload.job_success }}
-    - name: Check tr-server test execution success
-      if: ${{ github.event.client_payload.job_success  == 'success' && github.event.client_payload.repo == 'influx-db' }}
-      run: exit 0
-    - name: Check tr-server test execution failure 
-      if: ${{ github.event.client_payload.job_success  == 'failure' && github.event.client_payload.repo == 'influx-db' }}
-      run: exit 1
-  
+    - name: Run test script
+      id : test
+      run: |
+       echo ${{ github.event.client_payload.repo }}
+    - name: send success test result back to influx-db
+      if: ${{ steps.test.outcome  == 'success' && github.event.client_payload.repo == 'influx-db' }}
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.IOC_TOKEN }}
+        script: |
+          github.rest.repos.createDispatchEvent({
+            owner: context.repo.owner,
+            repo: 'influx-db',
+            event_type: 'tr-server',
+            client_payload: {"job_success": "success", "repo": "Test_github_action"}
+          })
+     
+    - name: send success test result back to influx-db
+      if: ${{ steps.test.outcome  == 'failure' && github.event.client_payload.repo == 'influx-db' }}
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.IOC_TOKEN }}
+        script: |
+          github.rest.repos.createDispatchEvent({
+            owner: context.repo.owner,
+            repo: 'influx-db',
+            event_type: 'tr-server',
+            client_payload: {"job_success": "failure", "repo": "Test_github_action"}
+          })
+          core.setFailed('Action failed')
+       
