@@ -1,9 +1,7 @@
 name: Swift
 
 on: 
-  push:
-    branches:
-      - develop
+
   workflow_dispatch:
 jobs:
   Run_workspace_Tests:
