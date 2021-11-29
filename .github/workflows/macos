@@ -1,0 +1,12 @@
+name: Swift
+
+on: 
+
+  workflow_dispatch:
+jobs:
+  Run_workspace_Tests:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: List available Xcode versions
+      run: ls /Applications | grep Xcode
