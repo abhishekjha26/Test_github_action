@@ -1,0 +1,42 @@
+name: Check dependent modules test integration
+
+on: 
+  repository_dispatch:
+    types: [ tr_server ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run test script
+      id : test
+      run: |
+       echo ${{ github.event.client_payload.repo }}
+    - name: send success test result back to influx-db
+      if: ${{ steps.test.outcome  == 'success' && github.event.client_payload.repo == 'influx-db' }}
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.PAT }}
+        script: |
+          github.rest.repos.createDispatchEvent({
+            owner: context.repo.owner,
+            repo: 'influx-db',
+            event_type: 'tr-server',
+            client_payload: {"job_success": "success", "repo": "Test_github_action"}
+          })
+     
+    - name: send success test result back to influx-db
+      if: ${{ steps.test.outcome  == 'failure' && github.event.client_payload.repo == 'influx-db' }}
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.PAT }}
+        script: |
+          github.rest.repos.createDispatchEvent({
+            owner: context.repo.owner,
+            repo: 'influx-db',
+            event_type: 'tr-server',
+            client_payload: {"job_success": "failure", "repo": "Test_github_action"}
+          })
+          core.setFailed('Action failed')
+       
