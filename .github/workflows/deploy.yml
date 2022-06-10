@@ -44,13 +44,13 @@ jobs:
 # #               base: "master",
 # #               head: "${{ github.event.inputs.tags }}"
 # #             })
-# #       - name: Checkout
-# #         uses: actions/checkout@v1
-# #       - name: gihub context
-# #         run: echo ${{ env.ENVIRONMENT }}
-# #       - run: |
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: gihub context
+        run: echo ${{ env.ENVIRONMENT }}
+      - run: |
  
-#          echo ${{ github.context.env.github_repository }}
+          echo ${{ github.context.env.github_repository }}
       - name: Post to a Slack channel
         id: slack
         uses: slackapi/slack-github-action@v1.14.0
