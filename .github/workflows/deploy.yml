@@ -64,6 +64,10 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          fromTag: "3.0.139"
+          toTag: "3.0.140"
+          token:  ${{ secrets.PAT }}
       - name: Echo Changelog
         run: echo ${{steps.changelog.outputs.changelog}}
       
