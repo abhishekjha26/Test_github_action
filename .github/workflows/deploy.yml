@@ -59,6 +59,13 @@ jobs:
           slack-message: 'Tag: ${{ github.event.inputs.tags }} for ${{ env.ENVIRONMENT }} has been deployed successfully'
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Build Changelog
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Echo Changelog
+        run: echo ${{steps.changelog.outputs.changelog}
       
 #       - name: setup Node environment
 #         uses: actions/setup-node@v1
