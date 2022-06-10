@@ -65,7 +65,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo Changelog
-        run: echo ${{steps.changelog.outputs.changelog}
+        run: echo ${{steps.changelog.outputs.changelog}}
       
 #       - name: setup Node environment
 #         uses: actions/setup-node@v1
