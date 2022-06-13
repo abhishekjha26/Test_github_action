@@ -70,6 +70,9 @@ jobs:
           token:  ${{ secrets.PAT }}
       - name: Echo Changelog
         run: echo ${{steps.changelog.outputs.changelog}}
+      - name: New relic deployment
+        run: |
+         curl -X POST "https://api.newrelic.com/v2/applications/$APP_ID/deployments.json" -H "Api-Key:${{ secrets.NEW_RELIC_API_KEY }}" -H "Content-Type: application/json" -d '{"deployment":{"revision":"${{ github.event.inputs.tags }}","changelog":"${{ github.event.inputs.tags }}","description":"Added a deployments resource to the v2 API","user":"datanerd@example.com","timestamp":"2019-10-08T00:15:36Z"}}'
       
 #       - name: setup Node environment
 #         uses: actions/setup-node@v1
